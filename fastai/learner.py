@@ -48,8 +48,7 @@ def save_model(file, model, opt, with_opt=True, pickle_protocol=2):
 def load_model(file, model, opt, with_opt=True, device=None, strict=True):
     "Load `model` from `file` along with `opt` (if available, and if `with_opt`)"
     distrib_barrier()
-    if isinstance(device, int): device = torch.device('cuda', device)
-    elif device is None: device = 'cpu'
+    if isinstance(device, int): device = torch.device('mps', device)
     state = torch.load(file, map_location=device)
     hasopt = set(state)=={'model', 'opt'}
     model_state = state['model'] if hasopt else state
@@ -202,7 +201,7 @@ class Learner(GetAttr):
         self.opt.zero_grad()
 
     def _set_device(self, b):
-        model_device = torch.device(torch.cuda.current_device()) if next(self.model.parameters()).is_cuda else torch.device('cpu')
+        model_device = torch.device('mps')
         dls_device = getattr(self.dls, 'device', default_device())
         if model_device == dls_device: return to_device(b, dls_device)
         else: return to_device(b, model_device)

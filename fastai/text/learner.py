@@ -88,7 +88,7 @@ def load_model_text(
 ):
     "Load `model` from `file` along with `opt` (if available, and if `with_opt`)"
     distrib_barrier()
-    if isinstance(device, int): device = torch.device('cuda', device)
+    if isinstance(device, int): device = torch.device('mps', device)
     elif device is None: device = 'cpu'
     state = torch.load(file, map_location=device)
     hasopt = set(state)=={'model', 'opt'}

@@ -252,7 +252,7 @@ class DataLoaders(GetAttr):
             self._add_tfms(tfms,event,loader)
 
     def cuda(self): return self.to(device=default_device())
-    def cpu(self):  return self.to(device=torch.device('cpu'))
+    def cpu(self):  return self.to(device=torch.device('mps'))
 
     @classmethod
     def from_dsets(cls,

@@ -264,7 +264,7 @@ def default_device(use_cuda=-1):
     if use_cuda != -1: defaults.use_cuda=use_cuda
     use = defaults.use_cuda or (torch.cuda.is_available() and defaults.use_cuda is None)
     assert torch.cuda.is_available() or not use
-    return torch.device(torch.cuda.current_device()) if use else torch.device('cpu')
+    return torch.device(torch.cuda.current_device()) if use else torch.device('mps')
 
 # Cell
 def to_device(b, device=None, non_blocking=False):

@@ -31,6 +31,7 @@ class _FakeLoader:
     def __init__(self, d, pin_memory, num_workers, timeout, persistent_workers):
         self.dataset,self.default,self.worker_init_fn = self,d,_wif
         store_attr('d,pin_memory,num_workers,timeout,persistent_workers')
+        self.pin_memory_device = "mps"
 
     def __iter__(self): return iter(self.d.create_batches(self.d.sample()))
 
